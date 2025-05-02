@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+from langchain.vectorstores import FAISS
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_community.chat_message_histories import ChatMessageHistory
@@ -10,9 +11,8 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.runnables.history import RunnableWithMessageHistory
-from langchain_chroma import Chroma
+# from langchain_chroma import Chroma
 from dotenv import load_dotenv
-
 # Load environment variables
 load_dotenv()
 os.environ['HF_TOKEN'] = os.getenv("HF_TOKEN")
@@ -53,7 +53,8 @@ if api_key:
         splits = text_splitter.split_documents(documents)
 
         embeddings = HuggingFaceEmbeddings()
-        vectorstore = Chroma.from_documents(documents=splits, embedding=embeddings)
+        # vectorstore = Chroma.from_documents(documents=splits, embedding=embeddings)
+        vectorstore = FAISS.from_documents(documents=splits, embedding=embeddings)
         retriever = vectorstore.as_retriever()
 
         # System prompt for contextualization
