@@ -15,7 +15,7 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
-os.environ['HF_TOKEN'] = os.getenv("HF_TOKEN")
+os.environ['HF_TOKEN'] = os.getenv("HF_Token")
 
 # Streamlit UI
 st.title("Conversational RAG with PDF Uploads & Chat History")
